@@ -1,4 +1,4 @@
-package com.venture.nexuschat.common.websocket;
+package com.venture.nexuschat.websocket;
 
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;

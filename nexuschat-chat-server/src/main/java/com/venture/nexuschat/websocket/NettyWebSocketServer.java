@@ -1,4 +1,4 @@
-package com.venture.nexuschat.common.websocket;
+package com.venture.nexuschat.websocket;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;

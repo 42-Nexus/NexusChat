@@ -1,4 +1,4 @@
-package com.venture.nexuschat.common.websocket;
+package com.venture.nexuschat.websocket;
 
 import cn.hutool.core.net.url.UrlBuilder;
 import io.netty.channel.ChannelHandlerContext;
