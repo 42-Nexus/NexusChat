@@ -1,6 +1,7 @@
 package com.venture.nexuschat.user.service;
 
 import cn.hutool.core.util.RandomUtil;
+import com.venture.nexuschat.common.adapter.TextBuilder;
 import com.venture.nexuschat.user.adapter.UserAdapter;
 import com.venture.nexuschat.user.dao.UserDao;
 import com.venture.nexuschat.user.entity.UserEntity;
@@ -42,28 +43,27 @@ public class WxMsgService {
 //    private MQProducer mqProducer;
 
     public WxMpXmlOutMessage scan(WxMpService wxMpService, WxMpXmlMessage wxMpXmlMessage) {
-//        String openid = wxMpXmlMessage.getFromUser();
-//        Integer loginCode = Integer.parseInt(getEventKey(wxMpXmlMessage));
-//        UserEntity user = userDao.getByOpenId(openid);
-//        //如果已经注册,直接登录成功
-//        if (Objects.nonNull(user) && StringUtils.isNotEmpty(user.getAvatar())) {
+        String openid = wxMpXmlMessage.getFromUser();
+        Integer loginCode = Integer.parseInt(getEventKey(wxMpXmlMessage));
+        UserEntity user = userDao.getByOpenId(openid);
+        //如果已经注册,直接登录成功
+        if (Objects.nonNull(user) && StringUtils.isNotEmpty(user.getAvatar())) {
 //            mqProducer.sendMsg(MQConstant.LOGIN_MSG_TOPIC, new LoginMessageDTO(user.getId(), loginCode));
-//            return null;
-//        }
-//
-//        //user为空先注册,手动生成,以保存uid
-//        if (Objects.isNull(user)) {
-//            user = User.builder().openId(openid).build();
-//            userService.register(user);
-//        }
-//        //在redis中保存openid和场景code的关系，后续才能通知到前端,旧版数据没有清除,这里设置了过期时间
+            return null;
+        }
+
+        //user为空先注册,手动生成,以保存uid
+        if (Objects.isNull(user)) {
+            user = UserEntity.builder().openId(openid).build();
+            userService.register(user);
+        }
+        //在redis中保存openid和场景code的关系，后续才能通知到前端,旧版数据没有清除,这里设置了过期时间
 //        RedisUtils.set(RedisKey.getKey(RedisKey.OPEN_ID_STRING, openid), loginCode, 60, TimeUnit.MINUTES);
 //        //授权流程,给用户发送授权消息，并且异步通知前端扫码成功,等待授权
 //        mqProducer.sendMsg(MQConstant.SCAN_MSG_TOPIC, new ScanSuccessMessageDTO(loginCode));
-//        String skipUrl = String.format(URL, wxMpService.getWxMpConfigStorage().getAppId(), URLEncoder.encode(callback + "/wx/portal/public/callBack"));
-//        WxMpXmlOutMessage.TEXT().build();
-//        return new TextBuilder().build("请点击链接授权：<a href=\"" + skipUrl + "\">登录</a>", wxMpXmlMessage, wxMpService);
-        return null;
+        String skipUrl = String.format(URL, wxMpService.getWxMpConfigStorage().getAppId(), URLEncoder.encode(callback + "/wx/portal/public/callBack"));
+        WxMpXmlOutMessage.TEXT().build();
+        return new TextBuilder().build("请点击链接授权：<a href=\"" + skipUrl + "\">登录</a>", wxMpXmlMessage);
     }
 
     private String getEventKey(WxMpXmlMessage wxMpXmlMessage) {

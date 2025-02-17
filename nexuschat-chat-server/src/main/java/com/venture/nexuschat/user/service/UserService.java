@@ -1,6 +1,8 @@
 package com.venture.nexuschat.user.service;
 
 
+import com.venture.nexuschat.user.entity.UserEntity;
+
 /**
  * <p>
  * 用户表 服务类
@@ -11,4 +13,5 @@ package com.venture.nexuschat.user.service;
  */
 public interface UserService {
 
+    void register(UserEntity user);
 }

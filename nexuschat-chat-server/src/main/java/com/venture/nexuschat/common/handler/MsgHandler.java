@@ -57,7 +57,7 @@ public class MsgHandler extends AbstractHandler {
         //组装回复消息
         String content = "收到信息内容：" + JSONUtil.toJsonStr(wxMessage);
 
-        return new TextBuilder().build(content, wxMessage, weixinService);
+        return new TextBuilder().build(content, wxMessage);
 
     }
 
