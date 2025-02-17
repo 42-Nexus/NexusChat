@@ -45,6 +45,7 @@ public class WxMsgService {
     public WxMpXmlOutMessage scan(WxMpService wxMpService, WxMpXmlMessage wxMpXmlMessage) {
         String openid = wxMpXmlMessage.getFromUser();
         Integer loginCode = Integer.parseInt(getEventKey(wxMpXmlMessage));
+        UserEntity byId = userDao.getById(0);
         UserEntity user = userDao.getByOpenId(openid);
         //如果已经注册,直接登录成功
         if (Objects.nonNull(user) && StringUtils.isNotEmpty(user.getAvatar())) {
